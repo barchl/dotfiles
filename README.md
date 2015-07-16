@@ -10,11 +10,15 @@ Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)
   
     -Follow ArchWiki instructions on touchpad customization.
     
-    -install synaptics package via pacman.
-    
+    -install xf86-input-synaptics via pacman.
+
+What I need:
+
   -Powerline
   
   -Stanford Portable Library?
   
   -CS50 Library?
+  
+  -Zathura: Download PDF docs to read.
     
