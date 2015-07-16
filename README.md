@@ -4,17 +4,21 @@ Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)
 
   -Sound:
   
-    -alsa-base.conf (not 100% sure, forgot.)
+    -alsa-base.conf (not 100% sure, forgot.) --> /etc/modprobe.d/
     
   -Touchpad:
   
     -Follow ArchWiki instructions on touchpad customization.
     
-    -install synaptics package via pacman.
-    
-  -Powerline
+    -install xf86-input-synaptics via pacman.
+
+What I need:
+
+    -Powerline
   
-  -Stanford Portable Library?
+    -Stanford Portable Library?
   
-  -CS50 Library?
+    -CS50 Library?
+  
+    -Zathura: Download PDF docs to read.
     
