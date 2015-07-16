@@ -14,11 +14,11 @@ Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)
 
 What I need:
 
-  -Powerline
+    -Powerline
   
-  -Stanford Portable Library?
+    -Stanford Portable Library?
   
-  -CS50 Library?
+    -CS50 Library?
   
-  -Zathura: Download PDF docs to read.
+    -Zathura: Download PDF docs to read.
     
