@@ -30,5 +30,9 @@ What I need:
     
     -zsh
     
+    -tmux
+
+    -TeamViewer?
+
     -
     
