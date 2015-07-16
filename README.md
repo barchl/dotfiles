@@ -4,7 +4,7 @@ Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)
 
   -Sound:
   
-    -alsa-base.conf (not 100% sure, forgot.)
+    -alsa-base.conf (not 100% sure, forgot.) --> /etc/modprobe.d/
     
   -Touchpad:
   
