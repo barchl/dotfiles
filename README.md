@@ -13,6 +13,8 @@ Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)
     -install synaptics package via pacman.
     
   -Powerline
+  
   -Stanford Portable Library?
+  
   -CS50 Library?
     
