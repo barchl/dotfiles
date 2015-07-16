@@ -22,3 +22,13 @@ What I need:
   
     -Zathura: Download PDF docs to read.
     
+    -Edit the panel: xft-lemonbar-git and xft-dmenu
+    
+    -weechat (irc)
+    
+    -OpenSSH
+    
+    -zsh
+    
+    -
+    
