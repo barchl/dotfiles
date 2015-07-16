@@ -1,0 +1,21 @@
+#include "/home/barchl/.colors/tomorrow_night"
+! #include "/home/barchl/.colors/naught_see"
+
+! urxvt setting
+urxvt*geometry:        80x30
+urxvt*scrollBar:       false
+urxvt*borderless:      1
+urxvt*cursorUnderline: true
+urxvt*cursorBlink:     true
+urxvt*internalBorder:  4
+urxvt*depth:           32
+urxvt*dynamicColors:   on
+urxvt*dpi:     	       96
+urxvt*antialias:       true
+
+! urxvt*font: xft:terminus:size=8:anticlias=true
+! urxvt*font: xft:Inconsolata:size=15
+urxvt*font: xft:Inconsolata:size=15:antialias=true:hinting=true,xft:Inconsolata\ for\ Powerline:size=15
+! urxvt*font: xft:Source Code Pro:size=10:anticlias=true, xft:Inconsolata for Powerline
+! urxvt*letterSpace: -1
+
