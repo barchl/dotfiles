@@ -13,12 +13,6 @@ Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)
     -install xf86-input-synaptics via pacman.
 
 What I need:
-
-    -Powerline
-  
-    -Stanford Portable Library?
-  
-    -CS50 Library?
   
     -Zathura: Download PDF docs to read.
     
@@ -26,13 +20,5 @@ What I need:
     
     -weechat (irc)
     
-    -OpenSSH
-    
-    -zsh
-    
     -tmux
-
-    -TeamViewer?
-
-    -
     
