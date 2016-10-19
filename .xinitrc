@@ -18,8 +18,5 @@ fi
 xsetroot -cursor_name left_ptr
 xset m 1/5
 
-#set background
-feh --bg-scale ~/Pictures/arch_white.jpg 
-
 sxhkd &
 exec bspwm
