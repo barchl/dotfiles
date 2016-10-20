@@ -1,0 +1,6 @@
+#/bin/sh
+
+SIZE="9"
+FONT="Terminus-$SIZE"
+
+dmenu_run -i -b -fn ${FONT} -p ">>" 
