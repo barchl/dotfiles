@@ -1,6 +1,6 @@
 # dotfiles
 
-Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)
+### **Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)**
 
  * Sound:
   
@@ -12,7 +12,7 @@ Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)
     
     * Install xf86-input-synaptics via pacman.
     
-  * Edit the panel: xft-lemonbar and dmenu2, or for the lazy polybar
+  * Edit the panel: [xft-lemonbar] (https://aur.archlinux.org/packages/lemonbar-xft-git/) and [dmenu2] (https://aur.archlinux.org/packages/dmenu2/), or for the lazy [polybar] (https://github.com/jaagr/polybar)
     
   * weechat (irc)
 
