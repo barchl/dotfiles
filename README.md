@@ -36,5 +36,6 @@
       
       4. Profit!
     
- 
- 
+    
+ ![](desktop-[1559].jpg)
+ *Desktop with default polybar config (and broken icons)*
