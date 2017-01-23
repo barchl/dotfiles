@@ -1,0 +1,606 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" Content="text/html;charset=UTF-8">
+<TITLE>WebVoyage</TITLE>
+<style type="text/css" media="screen">
+@import "/css/webvoyageStyles.css";
+</style>
+</HEAD>
+<BODY onLoad="document.querybox.Search_Arg.focus()" >
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<!-- Start of HTML header portion -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/css/aeonRequestsDialog.css" />
+<script src="/js/aeonRequestsDialog.min.js"></script>
+<script src="/js/jquery.jqote2.min.js"></script>
+
+
+<script type="text/javascript" src="https://giluc.usg.edu/usg_common.js"></script>
+<script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-29420063-1']);
+_gaq.push(['_setDomainName', 'uga.edu']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+</script>
+
+<style type="text/css">
+@import "/css/sfx.css";
+</style>
+<script type="text/javascript" language="javascript" src="/js/sarissa.js"></script>
+<script type="text/javascript" language="javascript" src="/js/sfx.js"></script>
+
+<script type="text/javascript" language="javascript">
+// cross-browser event handling for IE5+, NS6+ and Mozilla
+// By Scott Andrew
+function addEvent(elm, evType, fn, useCapture){
+if (elm.addEventListener) {
+elm.addEventListener(evType, fn, useCapture);
+return true;
+} else if (elm.attachEvent) {
+var r = elm.attachEvent('on' + evType, fn);
+return r;
+} else {
+elm['on' + evType] = fn; } }
+
+// Call sfx.fullTextCheck() after the page has loaded
+addEvent(window, 'load', sfx.fullTextCheck, false);
+</script>
+
+<script type="text/javascript" language="javascript">
+function openWin(URL) {
+add1=window.open(URL,"add1","toolbar=1,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,height=250,width=650")
+}
+
+function addText() {
+document.write('</td><span id=pinx><td align=left style="padding-bottom:10px;"><font size="2"><b>In the Box ABOVE</b>, enter your UGA ID number<br>(9 digits, begining with 81) or your full <br> barcode number (14 or 16 digits)</font></td><td class="barcodehelp"></td></tr><tr><th align=right>PIN:');
+}
+function addText2() {
+document.write("</td></tr><tr><th colspan=2 style='padding:10px;font-size:18px;'>Enter your UGA ID Number, PIN and Last Name, then click Login</th></tr><tr><th align=right><b>Home Institution:</b>");
+}
+function addTextCP() {
+document.write("</td></tr><tr><th colspan=2><font size=+1 face='Arial, Helvetica, sans-serif'><b>PINs must be 5 to 12 alphanumeric (letters or numbers) characters in length. No special characters. It is Not case sensitive.<br>NOTE: If you are using Internet Explorer, there is a bug in the system that will cause a delay in response (approx. 1 minute), but your PIN does get changed.<br><br></b></font></td></tr><tr><th align=right>");
+}
+function getPIN(f) {
+f.action = '/getPIN.php';
+var barcode = cleanBCandSetDropdown(f);
+f.BC.value = barcode; // rwt
+f.submit();
+}
+function addText4() {
+var txt = document.createElement('text');
+txt.innerHTML = '<p><span class="error">*</span><span style="font: 11px arial,helvetica,clean,sans-serif;">Note: If you do not know your PIN, enter just your ID and last name,<br> then click Get My PIN to have it emailed to your registered email address.</span></p>';
+var rnode = document.getElementById('inx');
+rnode.parentNode.appendChild(txt);
+}
+
+function checkPINandBC(f) {
+var svalue = f.PIN.value;
+if ( svalue.length == 0 || svalue == "" ) {
+alert("You did not enter a PIN. Please try again.");
+//f.elements[3].value = "";
+f.elements[4].value = "";
+//f.elements[5].value = "";
+f.elements[3].select();
+f.elements[3].focus();
+return;
+}
+//var svalue = f.PIN.value;
+if ( svalue.length < 5 || svalue.length >12 ) {
+alert("The length of the PIN you entered is incorrect.");
+//f.elements[3].value = "";
+f.elements[4].value = "";
+//f.elements[5].value = "";
+f.elements[3].select();
+f.elements[3].focus();
+return;
+}
+var cExp = new RegExp("[^A-Z|^a-z|^0-9]","g");
+var ans = f.PIN.value;
+var ans1 = ans.match(cExp);
+if (ans1 != null ) {
+alert("You have entered invalid characters in the PIN.");
+f.elements[1].value ="";
+f.elements[4].value = "";
+f.elements[3].select();
+f.elements[3].focus();
+return;
+}
+var barcode = cleanBCandSetDropdown(f);
+f.BC.value = barcode; // rwt
+f.submit();
+}
+
+function cleanBCandSetDropdown(f) {
+if (window.XMLHttpRequest) {
+var xhttp=new XMLHttpRequest();
+}
+else {
+var xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+}
+var host = document.location.host;
+var url = "https://" + host + "/getDropDownIDs.php";
+xhttp.open("GET",url,false);
+xhttp.send("");
+var response=xhttp.responseXML;
+var barcodeIDforDropdown = response.getElementsByTagName('bc')[0].firstChild.nodeValue;
+var institutionIDforDropdown = response.getElementsByTagName('iid')[0].firstChild.nodeValue;
+var barcode = f.BC.value;
+barcode = barcode.split(' ').join('');//remove spaces
+if (barcode.length == 10){//if 10 digits, remove last digit
+barcode = barcode.substr(0, barcode.length-1)
+}
+if (barcode.length < 10){
+f.LGNT.value = institutionIDforDropdown;
+}
+else{
+f.LGNT.value = barcodeIDforDropdown;
+}
+return barcode;
+}
+
+function checkBarcodeOnRecallForm(f){
+var barcode = f.RBC.value;
+barcode = barcode.split(' ').join('');//remove spaces
+if (barcode.length == 10){//if 10 digits, remove last digit
+barcode = barcode.substr(0, barcode.length-1)
+}
+f.RBC.value = barcode;
+f.submit();
+}
+</script>
+
+<style type="text/css">
+a#tgf {position:relative;float:right;left:-20px;top:-60px;}
+a#wtd {position:relative;float:right;left:125px;top:-17px;}
+</style>
+<!--[if IE]>
+<style TYPE="text/css">
+a#tgf {position:relative;float:right;left:-20px;top:-60px;}
+a#wtd {position:relative;float:right;left:125px;top:-17px;}
+</style>
+<![endif]-->
+
+
+<div style="padding-bottom:9px;margin-bottom:0px;">
+<CENTER>
+<A HREF="/webvoy.htm"><IMG ALIGN=TOP BORDER=0 ALT="Start Over" SRC="/images/banner.gif"></A>
+</CENTER>
+
+<a id="tgf" title="Try our alternative interface" href=http://gilfind.uga.edu target=_blank><img src=/images/trygilfind145X40.gif border=0></a>
+<a id="wtd" title="Find out what is different between the two." href=http://gil.usg.edu/gilhome/index.php/gilfindvsclassic/ target=_blank><img src=/images/difference2.gif border=0 height=23 width=123></a>
+</div>
+<div style="clear:both;">
+</div>
+
+<!-- End of HTML header portion -->
+<HR>
+<TD><STRONG>Database Name:  </STRONG>University of Georgia Libraries</TD>
+<BR>
+<B><FONT SIZE=+1 COLOR="RED">Your search failed!</FONT></B>
+<br>
+<!--
+</CENTER>
+<BR>
+<A HREF="http://gil.uga.edu/help/search1_h.htm" target="_blank" ALIGN="left">
+<STRONG>Search Tips</STRONG></A>
+<BR>
+<BR>
+<CENTER>
+-->
+<FORM NAME="querybox" ACTION="/cgi-bin/Pwebrecon.cgi" METHOD="GET" AUTOCOMPLETE="OFF">
+  <table width="95%" border="0" align="center">
+    <tr>
+      <td>
+       
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+          <tr valign=bottom>
+            <td>
+              <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <th nowrap bgcolor="#CCCCFF">&nbsp;<font color="#CCFFFF">
+                    &nbsp;<A STYLE="color:#CCFFFF" HREF="/cgi-bin/Pwebrecon.cgi?PAGE=bbSearch&SEQ=20161219182249&PID=JMH5iuHm2GSbc55eAF449fQ40k3exX">Builder Search</a> &nbsp; </font>&nbsp;</th>
+                </tr>
+              </table>
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td>
+              <table border="0" cellspacing="0" cellpadding="0">
+                <tr bgcolor="#990000" valign="center" align="center">
+                  <td nowrap width="1%">
+                  	<b>
+                  		<font color="#FFFFFF">&nbsp;&nbsp;Simple Search</font>
+                  	</b>&nbsp;&nbsp;
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td>
+              <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <th nowrap bgcolor="#CCCCFF">&nbsp;<font color="#CCFFFF">
+                    &nbsp;<A STYLE="color:#CCFFFF" HREF="/cgi-bin/Pwebrecon.cgi?PAGE=rbSearch&SEQ=20161219182249&PID=JMH5iuHm2GSbc55eAF449fQ40k3exX">Course Reserve</a> &nbsp; </font>&nbsp;</th>
+                </tr>
+              </table>
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td width = 96%>&nbsp; </td>
+          </tr>
+        </table>
+		<TABLE align=center border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <tr bgcolor=#990000 valign=bottom> 
+             <td nowrap valign="center">&nbsp;
+          </tr>
+          <tr bgcolor=#990000 valign=bottom> 
+            <TD> 
+              <table border="0">
+                <tr>
+							<TD align=left noWrap vAlign=top width="1%"> 
+								<table border="0" cellspacing="0" cellpadding="0">
+									<tr> 
+										<td noWrap>
+											<font color=#FFFFFF>&nbsp; 
+												<b>Find this:</b>
+											</font>
+										&nbsp;</td>
+										<td>
+                          <input size=35 maxlength=100 name=Search_Arg value="">
+										</td>
+									</tr>
+								</table>
+							</TD>
+							<TD align=right noWrap vAlign=top width="1%"> 
+								<H4>
+									<FONT color=#FFFFFF>
+										<B>&nbsp;Find Results in:&nbsp;</B>
+									</FONT>
+								</H4>
+							</TD>
+							<TD align=left noWrap vAlign=top width="1%">
+                      &nbsp;&nbsp;<select name="Search_Code" size="3">
+                  <OPTION SELECTED VALUE="TALL"><b>Title *</OPTION>
+                  <OPTION VALUE="JALL">Journal Title *</OPTION>
+                  <OPTION VALUE="NAME_">Author (e.g. Walker, Alice)</OPTION>
+                  <OPTION VALUE="SUBJ_">Subject Heading</OPTION>
+                  <OPTION VALUE="655H">Subject: Genre/Form</OPTION>
+                  <OPTION VALUE="AUTH_">Author/Uniform Title Browse</OPTION>
+                  <OPTION VALUE="086A">SuDoc Number Search</OPTION>
+                  <OPTION VALUE="CALL_">Call Number</OPTION>
+                  <OPTION VALUE="ISBO">ISBN</OPTION>
+                  <OPTION VALUE="ISSN">ISSN</OPTION>
+                  <OPTION VALUE="CMD">Command (<a href="/help/codes.htm"target="_blank">Click here for help</a>)</OPTION>
+                      </select>
+							&nbsp; </TD>
+                </tr>
+                <tr> 
+                  <td valign="top" align="left" nowrap>&nbsp;</td>
+                  <td valign="top" align="left" nowrap>&nbsp;</td>
+                </tr>
+              </table>
+          </TR>
+        </TABLE>
+    <INPUT TYPE=HIDDEN NAME=PID VALUE="JMH5iuHm2GSbc55eAF449fQ40k3exX">
+    <INPUT TYPE=HIDDEN NAME=SEQ VALUE="20161219182249">
+    <tr bgcolor=#CCCCFF valign=center> 
+      <td> 
+        <div align="center"> 
+          <div align="center"> 
+            <table align=center border="0" cellspacing="0" cellpadding="0" width="100%">
+              <tr> 
+                <td width="10%" align="center" valign="center" nowrap>&nbsp;
+<SELECT NAME="CNT">
+<OPTION SELECTED VALUE="10">10 records per page</OPTION>
+<OPTION VALUE="20">20 records per page</OPTION>
+<OPTION VALUE="25">25 records per page</OPTION>
+<OPTION VALUE="50">50 records per page</OPTION>
+</SELECT>
+                  </td>
+                <td noWrap width="80%"> 
+                  <div align="center">
+                     <INPUT TYPE=HIDDEN NAME=HIST VALUE="1">
+                     <INPUT TYPE="SUBMIT" VALUE="Submit">
+           </FORM>
+<FORM NAME="frm" ACTION="/cgi-bin/Pwebrecon.cgi" METHOD="GET" AUTOCOMPLETE="OFF" ENCTYPE="application/x-www-form-urlencoded">
+              <INPUT TYPE=HIDDEN NAME=RESET VALUE="sbSearch">
+    <INPUT TYPE=HIDDEN NAME=PID VALUE="JMH5iuHm2GSbc55eAF449fQ40k3exX">
+              <INPUT TYPE="SUBMIT" VALUE="Clear">
+               </div>
+ </TD>
+                <td width="10%" align="center" valign="center" nowrap>
+                <div align="right"><A HREF="/cgi-bin/Pwebrecon.cgi?PAGE=lbSearch&SEQ=20161219182249&PID=JMH5iuHm2GSbc55eAF449fQ40k3exX&LRP=sbSearch"><IMG SRC="/images//limit.gif" ALIGN="center" BORDER=0 ALT="Set Search Limits"></A>&nbsp;            	</td>
+          	  </tr>
+        	</table>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+<HR>
+</P>
+</FORM>
+</BODY>
+
+<!-- Start of HTML footer portion -->
+<br><center>
+
+<table border=1 cellpadding=20>
+<tr><td>
+<center>
+<b>GIL Record Errors?<br></b>
+<script language="javascript">
+
+var URL = "https://gil.uga.edu/public/cat-err.php";
+var bid;
+if (eval(document.frm))
+{
+if (eval(document.frm.RID))
+{
+bid = document.frm.RID.value;
+}
+}
+if (bid != undefined) {
+document.write("<a href=javascript:openWin(URL,bid);>Use our Error Reporting Form</a>");
+}
+else {
+document.write("Use our Error Reporting Form<br>at bottom of Title Display.");
+}
+</script>
+</td>
+<!-- comment out for holiday
+<td>
+<center>
+<b>Need Material from the Repository?<br></b>
+<script language="javascript">
+
+var URL2 = "http://gil.uga.edu/public/gil-requests/req-mat.php";
+if (bid != undefined) {
+/*document.write("Offsite Facility retrieval and delivery service is currently suspended<br>for the Holiday break. Service will resume January 3, 2012.");*/
+document.write("<a href=javascript:openWin(URL2,bid);>Use our Repository Request Form</a>");
+}
+else {
+/*document.write("Repository retrieval and delivery service is currently suspended for the holiday break. Service will resume January 2, 2007.");*/
+document.write("Use our Repository Request Form at bottom<br>of Title Display.");
+}
+</script>
+</td>
+-->
+<td>
+<center>
+<b>Need something that's In Process?<br></b>
+<script language="javascript">
+
+var URL3 = "http://gil.uga.edu/public/gil-requests/rush-cat.php";
+if (bid != undefined) {
+document.write("<a href=javascript:openWin(URL3,bid);>Make a Rush Cataloging Request</a>");
+}
+else {
+document.write("Use our Rush Cataloging Form<br>at bottom of Title Display.");
+}
+</script>
+</td>
+
+<center>
+
+<script>
+function openWin(URL,rid) {
+if (rid != undefined) {URL += '?bid='+rid;}
+error1=window.open(URL,"error1","toolbar=1,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,height=420,width=680");
+}
+
+</script>
+
+</tr>
+</table>
+</center>
+
+<script>
+var RID = document.forms[0].RID.value;
+var o = {};
+
+$(function(){
+if ( RID ){
+$.getJSON( 'https://gil.uga.edu/gilfind/vufind/Record/' + document.forms[0].RID.value + '?callback=?',{'showJSON':1,'isAeon':1}, function(data){
+if ( data.holdings ){
+o = data;
+$('#aeondiv').html( '<a href="#" id="aeon_submit" class="aeon_submit">Request</a> to use at the Special Collections Library<br/><hr width="150">');
+loadAeonDialog();
+}}); }
+
+} );
+
+function customCallback(){return formatDataForAeon(o)}
+function loadAeonDialog(){
+var settings = {
+'url':'https://uga.aeon.atlas-sys.com/aeon/aeon.dll',
+'scheduledDateLabel':'Select a date from the calendar (below) to visit UGA Special Collections to view the material.',
+'userReviewLabel': 'Keep this request saved in your account for later review. IT WILL NOT BE SENT TO LIBRARIES STAFF FOR FULFILLMENT.',
+'compressRequests':true,
+'stripUnchecked':true,
+'datasource':'custom',
+'customCallback': customCallback,
+'submitButtonSelector':'#aeon_submit',
+'selectAllButtonsPosition': 'bottom' ,
+'footer': '<i>* Requested items will be grouped by container in the Aeon system.</i>',
+'itemFields':[
+{ 'name':'ItemAuthor'},
+{ 'name':'ItemTitle'},
+{ 'name':'CallNumber'},
+{ 'name':'ItemNumber'},
+{ 'name':'Location'},
+{ 'name':'Site'},
+{'name':'ItemVolume'},
+{'name':'ItemDate'},
+{'name':'ItemEdition'}
+],
+};
+
+$('#aeon_submit').aeonRequestsDialog(settings);}
+
+
+
+function formatDataForAeon(data) {
+var settings = {};
+settings.count = 0;
+var siteMap = {
+"RussellBib":  "Russell",
+"Russell Rf":  "Russell",
+"Russell MS":  "Russell",
+"Russell":     "Russell",
+"RBR Exhib":   "Russell",
+"Ga Room":     "Hargrett",
+"Georgiana":   "Hargrett",
+"Hargr Drap":  "Hargrett",
+"Hargr Rare":  "Hargrett",
+"HargrRBHSV":  "Hargrett",
+"Pamphlets":   "Hargrett",
+"Hargr 18C":   "Hargrett",
+"Hargr Ref":   "Hargrett",
+"HargrCat":    "Hargrett",
+"Acqrare":     "Hargrett",
+"Hargr SST":   "Hargrett",
+"Hargr DER":   "Hargrett",
+"Hargr Wood":  "Hargrett",
+"Hargr Sdra":  "Hargrett",
+"UniArchive":  "Hargrett",
+"UniArchBK":   "Hargrett",
+"Hargr WRC":   "Hargrett",
+"Hargr JDBR":  "Hargrett",
+"Hargr MSBK":  "Hargrett"
+};
+
+// gather global information
+settings.globalFields = [];
+settings.globalFields.push({
+name: "DocumentType",
+value: "monograph"
+});
+settings.globalFields.push({
+name: "WebRequestForm",
+value: "EADRequest2"
+});
+// gather item information
+settings.items = [];
+var locArray = (data.holdings.location instanceof Array) ?
+data.holdings.location : [data.holdings.location];
+for (var i = 0; i < locArray.length; i++) {
+var loc = locArray[i];
+var itemArray = (loc.items.item instanceof Array) ?
+loc.items.item : [loc.items.item];
+for (var j = 0; j < itemArray.length; j++) {
+var item = itemArray[j];
+if (!siteMap[item.locationcode]) continue;
+var itemData = [];
+
+var val = data.core.author||'';
+if ( val != '' ) {
+itemData.push({
+name: "ItemAuthor",
+label: "Author",
+value: val
+});}
+
+
+val = data.core.title||'';
+if ( val != '' ) {
+itemData.push({
+name: "ItemTitle",
+label: "Title",
+value: val
+});}
+
+
+val = loc.callnumber||'';
+if ( val != '' ) {
+itemData.push({
+name: "CallNumber",
+label: "Call number",
+value: val
+});}
+
+
+val = item.itemnumber||'';
+if ( val != '' ) {
+itemData.push({
+name: "ItemNumber",
+label: "Barcode",
+value: val
+});}
+
+
+val = loc.location||'';
+if ( val != '' ) {
+itemData.push({
+name: "Location",
+label: "Location",
+value: val
+}); }
+
+
+val = item.volume||'';
+if ( val != '' ) {
+itemData.push({
+name: "ItemVolume",
+label: "Volume",
+value: val
+}); }
+
+
+val = item.date||'';
+if ( val != '' ) {
+itemData.push({
+name: "ItemDate",
+label: "Date",
+value: val
+}); }
+
+
+val = item.copy||'';
+if ( val != '' ) {
+itemData.push({
+name: "ItemEdition",
+label: "Copy #",
+value: val
+}); }
+
+
+val = siteMap[item.locationcode]||'';
+if ( val != '' ) {
+itemData.push({
+name: "Site",
+//label: "Site",
+value: val
+}); }
+
+settings.items.push({fields:itemData});
+settings.count++; }}
+
+
+return settings; }
+
+
+</script>
+
+<script type="text/javascript">
+/*track searches with results in Google Analytics*/
+var lookfor = grabSearchTerms(window.location.href);
+if (lookfor != "")
+{
+var numResults = grabNumResults(document);
+if (numResults != null) _gaq.push(['_trackEvent','Search','Results',lookfor,parseInt(numResults)]);
+}
+</script>
+</div><!--close footer-->
+<!-- End of HTML footer portion -->
+</HTML>

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# scriptbc - Wrapper for 'bc' that returns the result of a calculation
+# From the Wicked Cool Unix Shell Scripts book, by Dave Taylor. Get it, it's good shit!
+# Slightly modified so that it works on my Arch system.
+
+if [ $1 = "-p" ]; then
+	precision=$2
+	shift 2
+else
+	precision=2
+fi
+
+var="$*"
+
+echo "scale=$precision; $var" | bc -ql 
+
+exit 0

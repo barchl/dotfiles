@@ -1,0 +1,8 @@
+#!/bin/sh
+
+SIZE="9"
+FONT="Monaco-$SIZE"
+
+# dmenu_run -i -b -fn ${FONT} -p ">>"
+
+dmenu_run -o 0.8 -fn ${FONT} -h 50 -w 500 -x 680 -y 490

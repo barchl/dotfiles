@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# reverse - reverse the last action taken.
+
+histfile=$HOME/.histfile
+
+if [ $# -gt 1 ]; then
+	echo "Usage: "	
+fi
+
+

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# welcome - print the welcome screen for the user.
+
+WELCOME=" ╔╗╔╗╔╦═══╦╗──╔╗──╔═══╦═══╦═╗╔═╦═══╗  
+ ║║║║║║╔══╣║──║║──║╔═╗║╔═╗║║╚╝║║╔══╝ 
+ ║║║║║║╚══╣║──║║──║║─╚╣║─║║╔╗╔╗║╚══╗
+ ║╚╝╚╝║╔══╣║─╔╣║─╔╣║─╔╣║─║║║║║║║╔══╝
+ ╚╗╔╗╔╣╚══╣╚═╝║╚═╝║╚═╝║╚═╝║║║║║║╚══╗ 
+ ─╚╝╚╝╚═══╩═══╩═══╩═══╩═══╩╝╚╝╚╩═══╝ "
+
+# quotes="www.litquotes.com/random-words-of-wisdom.php"
+# quote=$(lynx -dump "$quotes")
+
+echo -e "${WELCOME} 
+${quote} Be motivated by the absolute nonsense, friendo!"
+
+exit 0
+
+
+

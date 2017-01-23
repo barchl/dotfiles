@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# checkugalib - Logs into GIL system and shows the due dates of everything checked out 
+#   for the user.
+# *Heavily borrowed from Wicked Cool Unix Shell Scripts. Check out Dave Taylor's book!*
+
+lib="https://gil.uga.edu/cgi-bin/Pwebrecon.cgi"
+libacctdb="$HOME/bin/.library.acctinfo"
+postdata="/tmp/$(basename $0).$$"
+awkdata="/tmp/$(basename $0).awk.$$"
+
+# Need UGAID, PIN, & last name
+if [ $# -eq 0 ]; then
+    echo "Usage: $(basename $0) \"card holder\""; exit 0
+fi
+
+acctinfo="$(grep -i "$1" $libacctdb)"
+bc="$(echo $acctinfo | cut -d: -f1)"
+pin="$(echo $acctinfo | cut -d: -f2)"
+lastname="$(echo $acctinfo | cut -d: -f3)"
+
+if [ -z "$acctinfo" ] ; then
+    echo "Error: account \"$1\" not in library db."
+    exit 1
+elif [ $(grep -i "$1" $libacctdb | wc -l) -gt 1 ]; then
+    echo "Error: account \"$1\" matches more than one record in the library db."
+    exit 1
+fi
+
+trap "/bin/rm -f $postdata $awkdata" 0
+
+cat << EOF > $postdata
+BC=${bc}&PIN=${pin}&LN=${lastname}&Logon=Login
+EOF
+
+# cat << "EOF" > $awkdata
+# {   if ( NR % 3 == 1) { title=$0 }
+ #    if ( NR % 3 == 2) { print $0 "|" title }
+# }
+# EOF
+
+lynx -source -post-data "$lib" < $postdata > results.html
+
+exit 0
+
+

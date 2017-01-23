@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# backup - Creates a full or incremental backup of a set of defined directories on the 
+#          system. By default, output is saved in /tmp with a timestamped filename,
+#          compressed. Specify an output device, another disk or a removable storage 
+#          device.
+
+usageQuit() {
+    cat << "EOF" >&2
+    Usage: $0 [-o output] [-l|-f] [-n]
+        -o specifies an alternative backup file or device.
+        -i incremental backup 
+        -f full backup
+        -n prevent updating timestamp if an incremental backup is done.
+EOF
+    exit 1
+}
+
+compress="bzip2"
+inclist="/tmp/backup.inclist.$(date +%d%m%y)"
+output="/tmp/backup.$(date +%d%m%y).bz2"
+tsfile="$HOME/.backup.timestamp"
+btype="incremental"
+noinc=0
+
+trap "/bin/rm -f $inclist" EXIT
+
+while getopts "o:ifn" arg; do
+    case "$arg" in
+        o ) output="$OPTARG";    ;;
+        i ) btype="incremental"; ;;
+        f ) btype="full";        ;;
+        n ) noinc=1;             ;;
+        ? ) usageQuit            ;;
+    esac
+done
+
+shift $(( $OPTIND - 1 ))
+
+echo "Doing $btype backup, saving output to $output"
+
+timestamp="$(date +'%m%d%I%M')"

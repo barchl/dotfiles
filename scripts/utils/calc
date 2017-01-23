@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# calc - command-line calculator, font end to bc. 
+# From the Wicked Cool Unix Shell Scripts book, by Dave Taylor. Get it, it's good shit!
+
+scale=2
+show_help(){
+cat << EOF
+	In addition to standard math functions, calc supports:
+	a % b 		remainder of a and b
+	a ^ b   	a raised to the power of b
+	s(x) 		sine of x, in radians
+	c(x) 		cosine of x, in radians
+	a(x)		arctangent of x, in radians
+	ln(x)		natural log of x
+	e(x)		exponential log of raising e to the x
+	j(n, x) 	bessel function of integer order n of x
+	scale N 	show N fractional digits (default = 2)
+EOF
+}
+
+if [ $# -gt 0 ]; then
+	exec scriptbc "$@"
+fi
+
+echo "Calc - simple calculator. Enter 'help' for help, 'quit' for quit."
+
+echo -n "calc> "
+
+while read command args
+do
+	case $command
+	in
+		quit|exit) exit 0					;;
+		help|\?)   show_help					;;
+		scale)	   scale=$args					;;
+		*)	   scriptbc -p $scale "$command" "$args" 	;;
+	esac
+
+	echo -n "calc> "
+done
+
+echo ""
+
+exit 0

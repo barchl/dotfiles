@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# From Dave Taylor's Wicked Cool Shell Scripts, modified just a bit for my own purposes. Check it out, it's pretty nifty!
+# bbcnews - Reports top stories on BBC World Service 
+
+url="http://bbc.com/news/technology"
+
+lynx -source $url | \
+    sed -n '/Last Updated:/,/

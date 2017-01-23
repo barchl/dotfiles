@@ -1,5 +1,9 @@
 #! /bin/sh
 
+PANEL_HEIGHT="17"
+# ICON_FONT1="xft:FontAwesome"
+# PANEL_FONT_FAMILY="-*-Source Code Pro-medium-r-normal-*-8-*-*-*-c-*-*-1"
+
 if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
 	printf "%s\n" "The panel is already running." >&2
 	exit 1
@@ -10,14 +14,19 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
+battery() {
+    cat /sys/class/power_supply/BAT0/capacity
+}
+
 bspc config top_padding $PANEL_HEIGHT
 bspc subscribe report > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
 clock -sf 'S%a %H:%M' > "$PANEL_FIFO" &
+battery > "$PANEL_FIFO" &
 
 . panel_colors
 
-panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -f "$ICON_FONT1" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
 
 wid=$(xdo id -a "$PANEL_WM_NAME")
 tries_left=20
