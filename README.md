@@ -1,6 +1,8 @@
 # dotfiles
 
-### **Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD)**
+My dotfiles.
+
+### **Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD), ArchLinux**
 
  * Sound:
   
@@ -37,5 +39,5 @@
       4. Profit!
     
     
-![](desktop-[1559].jpg)
+![](desktop[11-16-2017].jpg)
 *Desktop with default polybar config (and broken icons)*
