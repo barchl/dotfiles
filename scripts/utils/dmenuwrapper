@@ -5,4 +5,11 @@ FONT="Monaco-$SIZE"
 
 # dmenu_run -i -b -fn ${FONT} -p ">>"
 
-dmenu_run -o 0.8 -fn ${FONT} -h 50 -w 500 -x 680 -y 490
+DIMENSIONS=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
+WIDTH=$(echo $DIMENSIONS | sed -r 's/x.*//')
+HEIGHT=$(echo $DIMENSIONS | sed -r 's/.*x//')
+
+X_POS=$(expr $WIDTH / 2)
+Y_POS=$(expr $HEIGHT / 2)
+
+dmenu_run -o 0.8 -fn ${FONT} -h 50 -w 500 -x ${X_POS} -y ${Y_POS}

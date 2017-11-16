@@ -1,0 +1,328 @@
+[colors]
+foreground-alt = #D8D8D8
+foreground = #555555
+blue = #7495B6
+primary = #FFB52A
+alert = #BD2C40
+
+[global/wm]
+margin-top = 0
+margin-bottom = 22
+margin-left = 5
+margin-right = 5
+
+[icons]
+empty    = 
+occupied = 
+focused  = 
+
+[section/base]
+height = 22
+width = 100%
+fixed-center = true
+offset-x = 0
+offset-y = 0
+
+overline-size = 0
+underline-size = 0
+
+background = #1D1F21
+foreground = ${colors.foreground-alt}
+underline-color = #00f
+overline-color = #f00
+
+spacing = 1
+padding-left = 2
+padding-right = 2
+module-margin-left = 0
+module-margin-right = 0
+
+border-bottom-size = 3
+border-bottom-color = #2e2e2e
+border-top-size = 1
+border-top-color = ${xrdb:color0}
+border-color-foreground = #FFCD98
+
+font-0 = Dina:style=Regular:size=9;1
+font-1 = unifont:size=6:heavy:fontformat=truetype;-2
+font-2 = FontAwesome:pixelsize=11;1
+
+[bar/bottom]
+monitor = eDP1
+inherit = section/base
+
+bottom = true
+
+modules-center = mpd 
+
+[bar/extern_monitor]
+monitor = HDMI1
+monitor-strict = true
+inherit = section/base
+
+[bar/main]
+monitor = eDP1
+inherit = section/base
+
+modules-left = i3
+modules-center = 
+modules-right = date space network space battery space volume 
+
+[module/mpd]
+type = internal/mpd
+host = 127.0.0.1
+port = 6600
+
+interval = 2
+format-online = <icon-prev> <icon-seekb> <toggle> <icon-seekf> <icon-next> <icon-repeat> <bar-progress> <label-time> <label-song>
+format-paused = <icon-prev> <icon-seekb> <toggle> <icon-seekf> <icon-next> <icon-repeat> <bar-progress> <label-time> <label-song>
+format-stopped = ${format-paused}
+
+label-song = %artist% - %title%
+label-time = %elapsed% / %total%
+
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-seekb = 
+icon-seekf = 
+icon-random = 
+icon-repeat = 
+
+bar-progress-width = 45
+bar-progress-indicator = | 
+bar-progress-fill = - 
+bar-progress-empty = -
+
+[module/title]
+type = internal/xwindow
+label = %title:0:120:...%
+label-padding = 4
+;label-maxlen = 50
+
+[module/space]
+type = custom/script
+exec = echo "  "
+
+;[module/mail]
+;type = custom/script
+;interval = 10
+;format = <label>
+;format-prefix = "  "
+;format-foreground = ${colors.foreground-alt}
+;exec = python3 ~/.scripts/mail
+
+;[module/redshift]
+;type = custom/script
+;exec = redshift.sh
+
+[module/network]
+;type = custom/script
+;format-foreground = ${colors.foreground-alt}
+;exec = connectivity.sh
+
+type = internal/network
+interface = wlp1s0
+
+interval = 3.0 
+
+label-connected = %essid% %local_ip%
+label-connected-foreground = ${colors.foreground-alt}
+
+label-disconnected = not connected 
+
+;ramp-signal-0 =
+
+[module/volume]
+type = internal/volume
+format-volume = <ramp-volume> <label-volume>
+format-volume-foreground = ${colors.foreground-alt}
+format-muted = <label-muted>
+format-muted-foreground = ${colors.foreground-alt}
+label-volume = %percentage%
+
+label-muted =   muted
+label-muted-foreground = #aaa
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-headphones-0 = 
+
+[module/powermenu]
+type = custom/menu
+
+label-open = 
+label-close = cancel
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+menu-0-0-padding = 1
+menu-0-1-padding = 1
+
+menu-1-0 = reboot?
+menu-1-0-exec = sudo reboot
+menu-1-0-padding = 1
+
+menu-2-0 = power off?
+menu-2-0-exec = sudo poweroff
+menu-2-0-padding = 1
+label-open-foreground = ${colors.foreground-alt}
+label-close-foreground = ${colors.foreground-alt}
+
+[module/count]
+type = custom/script
+format-foreground = ${colors.foreground-alt}
+exec = count.sh
+
+[module/date]
+type = internal/date
+
+; Seconds to sleep between updates
+interval = 1.0
+
+; See "man date" for details on how to format the date string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+date = %d %b
+
+; Optional time format
+time = %H:%M
+
+; if `date-alt` or `time-alt` is defined, clicking
+; the module will toggle between formats
+date-alt = %A, %d %B %Y
+time-alt = %H:%M:%S
+
+; Available tags:
+;   <label> (default)
+format = <label>
+
+; Available tokens:
+;   %date%
+;   %time%
+; Default: %date%
+label = %time%
+label-foreground = ${colors.foreground-alt}
+
+[module/i3]
+type = internal/i3
+
+workspace-label = %index%
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-default = 
+
+format = <label-state> 
+index-sort = true
+pin-workspaces = true
+strip-wsnumbers = true
+
+label-unfocused = %icon%
+label-unfocused-padding = 1
+
+label-mode = %icon%
+label-mode-padding = 1
+
+label-visible = %icon%
+label-visible-foreground = #555555
+label-visible-padding = 1
+
+label-focused = %icon%
+label-focused-foreground = #888888
+label-focused-padding = 1
+
+label-occupied = %icon%
+label-occupied-padding = 1
+
+label-urgent = %icon%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+label-empty = %icon%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 1
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+full-at = 99
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC1
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+
+; Available tags:
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+format-charging-foreground = ${colors.foreground-alt}
+
+; Available tags:
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-foreground = ${colors.foreground-alt}
+
+; Available tags:
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;format-full = <ramp-capacity> <label-full>
+
+; Available tokens:
+;   %percentage% (default)
+;   %time%
+label-charging = %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+;   %time%
+label-discharging = %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+label-full = Fully charged
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+
+; Framerate in milliseconds
+animation-charging-framerate = 750

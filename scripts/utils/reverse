@@ -5,7 +5,7 @@
 histfile=$HOME/.histfile
 
 if [ $# -gt 1 ]; then
-	echo "Usage: "	
+	echo "Usage: reverse -[opt]"	
 fi
 
 
