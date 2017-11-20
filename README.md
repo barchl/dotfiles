@@ -39,5 +39,5 @@ My dotfiles.
       4. Profit!
     
     
-![](desktop[11-16-2017].jpg)
+![](desktop[11-16-2017].png)
 *Desktop with default polybar config (and broken icons)*
