@@ -2,6 +2,14 @@
 
 My dotfiles.
 
+### Current dotfiles history, explained by pictures:
+
+![](desktop-[1559].jpg)
+*Still rocking Arch, a couple years from first encountering it.*
+
+![](desktop[11-16-2017].png)
+*Desktop with polybar config, improved. (11-16-2017)*
+
 ### **Fixes for Chromebook Acer C720 (4gb RAM, 30gb SSD), ArchLinux**
 
  * Sound:
@@ -39,5 +47,4 @@ My dotfiles.
       4. Profit!
     
     
-![](desktop[11-16-2017].png)
-*Desktop with default polybar config (and broken icons)*
+
