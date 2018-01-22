@@ -1,15 +1,19 @@
 ! urxvt setting
-urxvt*geometry:        80x30
+urxvt*termName:        rxvt-256color
 urxvt*scrollBar:       false
 urxvt*borderless:      1
-urxvt*cursorUnderline: true
+urxvt*cursorUnderline: false
 urxvt*cursorBlink:     true
 urxvt*internalBorder:  4
 urxvt*depth:           32
 urxvt*dynamicColors:   on
 urxvt*dpi:     	       96
 urxvt*antialias:       true
-urxvt*font:            xft:Inconsolata:size=14
+
+urxvt*font:            xft:Inconsolata:style=Regular:pixelsize=14
+urxvt*boldFont:        xft:Inconsolata:style=Bold:pixelsize=14
+
+urxvt*url-launcher:    /usr/bin/firefox
 
 *background: #090100
 *foreground: #E8EAEC
