@@ -1,0 +1,146 @@
+[colors]
+bg = ${xrdb:background:#2b1f19}
+fg = ${xrdb:foreground:#9cc5c6}
+black = ${xrdb:color0}
+red = ${xrdb:color1}
+green = ${xrdb:color2}
+yellow = ${xrdb:color3}
+blue = ${xrdb:color4}
+magenta = ${xrdb:color5}
+cyan = ${xrdb:color6}
+white = ${xrdb:color7}
+
+; ==================================================
+; the top bar. for music, taskbar notifications only
+; ==================================================
+[bar/top]
+monitor = eDP1
+override-redirect = false
+
+bottom = false
+
+fixed-center = true
+
+; dimensions
+width = 50%
+height = 25
+
+; =========================================================
+; the bottom bar; all the main stuff
+; mostly because I'm always looking at the top of my screen
+; =========================================================
+[bar/mybar]
+monitor = eDP1
+override-redirect = false
+
+bottom = true
+
+fixed-center = true
+
+width = 100%
+height = 25
+
+offset by pixel value
+offset-x = 1%
+offset-y = 1%
+
+; background 
+background = ${colors.bg}
+foreground = ${colors.fg}
+
+padding-left = 2
+padding-right = 2
+module-margin-left = 2
+module-margin-right = 2
+
+font-0 = Dina:size=10;2
+font-1 = Inconsolata:pixelsize=10;1
+font-2 = Material Icons:pixelsize=10;0
+
+modules-left = i3 
+modules-center = 
+modules-right = date volume cpu wlan battery temperature
+
+border-size = 3
+border-color = ${colors.blue}
+
+; don't really want the system tray...
+; tray-position = right
+; tray-padding = 2
+; tray-transparent = false
+; tray-background = ${root.background}
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+strip-wsnumbers = true
+
+index-sort = true
+enable-click = false
+enable-scroll = false
+wrapping-scroll = false
+
+label-mode-padding = 1
+label-mode-foreground = #000
+label-mode-background = ${colors.bg}
+
+label-focused = %index%
+label-focused-foreground = ${colors.cyan}
+label-focused-background = ${colors.bg}
+label-focused-padding = 1
+
+label-unfocused = %index%
+label-unfocused-padding = 1
+
+label-visible = %index%
+label-visible-background = ${colors.bg}
+label-visible-padding = 1
+
+label-urgent = %index%
+label-urgent-background = ${colors.red}
+label-urgent-padding = 1
+
+[module/date]
+type = internal/date
+
+interval = 1.0
+date = %m-%d-%y
+time = %I:%M
+
+label = %date% %time%
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "cpu "
+
+[module/volume]
+
+[module/temperature]
+
+[module/battery]
+type = internal/battery
+full-at = 95
+
+battery = BAT0
+adapter = AC
+
+poll-interval = 10
+
+; format-full-prefix = "  "
+
+label-charging = %percentage%%
+label-discharging = %percentage%% 
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+
+format-connected = <label-connected>
+label-connected = %ifname% %local_ip%
+
+format-connected-foreground = ${colors.red}
+
+format-disconnected = 
