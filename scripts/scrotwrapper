@@ -1,0 +1,3 @@
+#!/bin/sh
+
+scrot ~/images/screenshots/%Y-%m-%d-%T-screenshot.png
