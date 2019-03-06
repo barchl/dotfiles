@@ -7,8 +7,6 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      # not included in this git repo. it won't help you, 
-      # go generate your own.
       ./hardware-configuration.nix
     ];
 
@@ -43,6 +41,7 @@
       dejavu_fonts
       siji
       tewi-font
+      fira-mono
     ]; 
   }; 
 
@@ -113,6 +112,9 @@
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
 
+  # Enable docker
+  virtualisation.docker.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.fish.enable = true;
   users.extraUsers.misterhuac = {
@@ -120,6 +122,7 @@
     group = "users";
     extraGroups = [ 
       "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" 
+      "docker"
     ];
     createHome = true;
     uid = 1000;
@@ -132,5 +135,4 @@
   # servers. You should change this only after NixOS release notes say you
   # should.
   system.stateVersion = "18.09"; # Did you read the comment?
-
 }
