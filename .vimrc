@@ -1,109 +1,77 @@
+"""""""""""""""""""""""""""""""""""""""""
+"
+" ~/.vimrc
+"
+" ---------------------------------------
+" Contents:				|
+" ---------------------------------------
+" -> General				|
+" -> Keybindings			|
+" -> Movement & Buffers			|
+" -> UI					|
+" -> Status bar				|
+" -> Files & Backups			|
+" -> Text/Tab/Indents			|
+" -> Misc				|
+" -> Helpers				|
+" ---------------------------------------
+
+" load pathogen
 execute pathogen#infect()
 
-" echom ">^.^<" 
+" ---------------------------------------
+" -> General				|
+" ---------------------------------------
 
-syntax enable
-" set background=dark
-" colorscheme ir_black
-let base16colorspace=256
-colorscheme base16-default-dark
+" Set ruler to lines, columns (see bottom right)
+set ruler 
+set rulerformat=%=%h%m%r%w\ %(%c%V%),%l/%L\ %P
 
-set title
-set hidden
+" Set numbers to the left.
+set number 
 
-set number
-set ruler
-set nocompatible
+" Set syntax highlighting.
+syn on
 
-set smartindent
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set smarttab
-
-set wrap
-set linebreak
-set encoding=utf8
-set t_Co=256
-
-" set wildmenu
-set wildmenu
-" set height of the command bar
-set cmdheight=1
-" hide a buffer when it is abandoned
-set hid
-
-" Close all buffers & current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
-map <leader>ba :bufdo bd<cr>
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
-" Set status line & format
-set laststatus=2
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
-
-" Backspace that acts like backspace should
-set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
-
-" Return to the last edit position when opening files
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-" Ignore case in searching.
-set ignorecase
-" Be smart about cases in searching
-set smartcase
-" Highlight search results
-set hlsearch
-" Magic for regular expressions.
-set magic
-
-" No sound on error
-set noerrorbells
-set novisualbell
-set tm=500
-set t_vb=
-
-" add an extra margin to the left to look nice
-set foldcolumn=1
-
-" no backups. no swaps; everything on github
-set nobackup
-set nowb
+" Turn off swap files
 set noswapfile
 
-" Replace movement with hjkl instead of arrow keys, because I hate arrow keys
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-nnoremap j gj
-nnoremap k gk
+" Keep a bunch of history
+set history=100
 
-" Set mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tm :tabmove
-map <leader>t<leader> :tabnext
+" set tabs to 4 spaces width
+filetype plugin indent on
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
-" Set mappings for moving between split windows.
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" ---------------------------------------
+" -> Keybindings			|
+" ---------------------------------------
 
-" Set mapping for nerdtree
-map <C-t> :NERDTreeToggle<CR>
+" Nerdtree toggle
+map <C-n> :NERDTreeToggle<CR>
 
-" True if paste mode is enabled
-function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    endif
-    return '' 
-endfunction
+" jk/kj -> <Esc>
+imap jk <Esc>
+imap kj <Esc>
+
+" Change between split windows 
+" With arrows
+nmap <left> <C-W>h 
+nmap <right> <C-W>l 
+nmap <up> <C-W>k 
+nmap <down> <C-W>j
+" or with <C-h/j/k/l>
+nnoremap <C-h> <C-W>h
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-l> <C-W>l
+
+" ---------------------------------------
+" -> Misc				|
+" ---------------------------------------
+
+" Nerdtree arrow symbols
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
